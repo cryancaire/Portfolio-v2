@@ -1,3 +1,14 @@
 <div class="text-green-500 text-2xl">
-    {{promptPrefix}}:<input class="placeholder:text-green-500 bg-black outline-none border-none" id="inputField">
+    <span>
+        {{promptPrefix}}:
+    </span>
+    <span>
+        <input 
+        autocomplete="off" 
+        class="placeholder:text-green-500 bg-black outline-none border-none" 
+        id="inputField" 
+        #inputField 
+        disabled 
+        (keyDown.enter)="terminalFn($event)">
+    </span>
 </div>

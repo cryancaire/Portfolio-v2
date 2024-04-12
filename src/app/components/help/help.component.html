@@ -1,0 +1,31 @@
+<div class="w-1/2 flex mx-auto text-green-500 flex-col">
+    <terminal-text 
+        text="Commands:" 
+        classes="text-3xl" 
+        animationName="commandsTitle"
+        (isAnimationComplete)="receivedEvent($event)"
+        [endDelay]="10">
+      </terminal-text>
+</div>
+
+<div class="w-1/2 flex mx-auto text-green-500 flex-col gap-1 pt-2 pl-4">
+      <terminal-text 
+        text="/projects" 
+        classes="text-2xl" 
+        (isAnimationComplete)="receivedEvent($event)" 
+        animationName="projectsText"
+        [receivedEvent]="recentlyCompletedAnimation" 
+        [waitingOn]="'commandsTitle'"
+        [typeSpeed]="10"
+        [endDelay]="20">
+      </terminal-text>
+      <terminal-text 
+        text="Will display a list of projects" 
+        classes="text-2xl" 
+        (isAnimationComplete)="receivedEvent($event)" 
+        animationName="projectsDescription"
+        [receivedEvent]="recentlyCompletedAnimation" 
+        [waitingOn]="'projectsText'"
+        [typeSpeed]="10">
+      </terminal-text>
+</div>

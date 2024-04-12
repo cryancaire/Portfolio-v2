@@ -8,17 +8,19 @@ import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, View
 export class TerminalTextComponent {
 
   @Input() text: string = "";
-  @Input() variation: string = "";
+  @Input() classes: string = "";
   @Input() animationName: string = "";
   @Output() isAnimationComplete = new EventEmitter();
   @Input() waitingOn: string = "";
   @Input() receivedEvent: any;
 
+  @Input() typeSpeed: any = 100;
+  @Input() endDelay: any = 20;
+
   @ViewChild('blinkingText') blinkingText!: ElementRef;
   @ViewChild('cursor') textCursor!: ElementRef;
   
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
     if (changes['receivedEvent'] && changes['receivedEvent'].currentValue !== changes['receivedEvent'].previousValue) {
       if (this.waitingOn === changes['receivedEvent'].currentValue['animationName']){
         this.textCursor.nativeElement.classList.remove('invisible')
@@ -46,7 +48,7 @@ export class TerminalTextComponent {
         clearInterval(interval);
         const cursorInterval = setInterval(() => {
           cursorBlink++;
-          if (cursorBlink === 20) {
+          if (cursorBlink === this.endDelay) {
             clearInterval(cursorInterval);
             cursor.classList.add('invisible');
             this.isAnimationComplete.emit({
@@ -55,9 +57,9 @@ export class TerminalTextComponent {
               'status': 'complete'
             })
           }
-        }, 100);
+        }, this.typeSpeed);
       }
-    }, 100); // Adjust the speed as needed
+    }, this.typeSpeed); // Adjust the speed as needed
   }
 
 }

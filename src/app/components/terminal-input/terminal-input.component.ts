@@ -1,4 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'terminal-input',
@@ -10,11 +11,14 @@ export class TerminalInputComponent {
   @Input() promptPrefix: string = "";
   @Input() receivedEvent: any;
   @Input() waitingOn: any;
+  @ViewChild('inputField') inputField!: ElementRef;
+
+  constructor(private renderer: Renderer2, private router: Router) {}
 
   receivedEventFn(event: any) {
     if (event['animationName'] === this.waitingOn) {
-      const inputField = document.getElementById('inputField');
-      inputField?.focus();
+      this.renderer.removeAttribute(this.inputField.nativeElement, 'disabled')
+      this.inputField?.nativeElement.focus();
     }
   }
 
@@ -24,4 +28,16 @@ export class TerminalInputComponent {
     }
   }
 
+  terminalFn(e: any) {
+    switch (e.target.value) {
+      case 'help':
+      case '/help':
+      case '?':
+        this.router.navigateByUrl('/help');
+        break;
+      default:
+        this.router.navigateByUrl('/');
+        break;
+    }
+  }
 }
