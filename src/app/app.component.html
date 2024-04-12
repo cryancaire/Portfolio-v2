@@ -1,15 +1,16 @@
 
 <div class="flex flex-col h-screen bg-black w-screen pt-4 pl-4">
-  <div class="flex items-center justify-center">
-    <terminal-text text="Corey Caire" variation="9xl" (isAnimationComplete)="receivedEvent($event)" animationName="nameTitle"></terminal-text>
+  <div class="flex flex-col items-center justify-center gap-1">
+    <terminal-text text="Corey Caire" variation="text-9xl" (isAnimationComplete)="receivedEvent($event)" animationName="nameTitle"></terminal-text>
+    <terminal-text 
+        text="Angular Developer" 
+        variation="text-5xl" 
+        (isAnimationComplete)="receivedEvent($event)" 
+        animationName="testAnimation"
+        [receivedEvent]="recentlyCompletedAnimation" 
+        [waitingOn]="'nameTitle'">
+      </terminal-text>
   </div>
-  <terminal-text 
-      text="Test" 
-      variation="2xl" 
-      (isAnimationComplete)="receivedEvent($event)" 
-      animationName="testAnimation"
-      [receivedEvent]="recentlyCompletedAnimation" 
-      [waitingOn]="'nameTitle'"></terminal-text>
       
   <terminal-input promptPrefix="usr/bin/" [receivedEvent]="recentlyCompletedAnimation" [waitingOn]="'testAnimation'"></terminal-input>
 
